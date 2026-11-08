@@ -240,3 +240,5 @@ if (process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
     console.log(`[WhaleWatchAgent] Server running on http://localhost:${PORT}`);
   });
 }
+
+export default app;
