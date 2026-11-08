@@ -1,9 +1,9 @@
 # 🐋 Pharos Whale-Watching Agent
 
-An autonomous capital-flow monitoring agent for the **Pharos Atlantic Testnet (Chain ID 688689)**. Engineered for the **Pharos Agent Arena (MediumTrading / Monitoring, 100 Base + 50 Video = 150 Points Target)** and integrated with the official **Pharos MCP Server** (`mcp.pharos.xyz/mcp`).
+An autonomous capital-flow monitoring agent for the **Pharos Atlantic Testnet (Chain ID 688689)**, built for the **Pharos Agent Arena** and integrated with the official **Pharos MCP Server** (`mcp.pharos.xyz/mcp`).
 
 ![Pharos Whale-Watching Banner](https://img.shields.io/badge/Pharos_Network-Atlantic_Testnet_688689-06b6d4?style=for-the-badge)
-![Agent Arena](https://img.shields.io/badge/Agent_Arena-MediumTrading_150_pts-10b981?style=for-the-badge)
+![Agent Arena](https://img.shields.io/badge/Agent_Arena-Trading_%26_Monitoring-10b981?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Production_Ready-success?style=for-the-badge)
 
 ---
