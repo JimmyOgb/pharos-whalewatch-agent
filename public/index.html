@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pharos Whale-Watching Agent | Atlantic Testnet</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+      <div class="brand">
+        <div class="logo-orb">🐋</div>
+        <div class="brand-text">
+          <span class="brand-title">PHAROS WHALE-WATCH</span>
+          <span class="brand-subtitle">Autonomous Capital Flow Sentinel</span>
+        </div>
+      </div>
+      <div class="status-strip">
+        <div class="status-pill network-pill">
+          <span class="status-dot green"></span>
+          <span>Pharos Atlantic (688689)</span>
+        </div>
+        <div class="status-pill mcp-pill" id="mcpBadge" title="Official Pharos MCP Server Status">
+          <span class="status-dot pulse" id="mcpDot"></span>
+          <span id="mcpLabel">MCP: Connecting...</span>
+        </div>
+        <div class="status-pill block-pill">
+          <span class="label">BLOCK</span>
+          <span class="value" id="currentBlock">—</span>
+        </div>
+        <button id="btnManualScan" class="btn btn-primary btn-sm">
+          <span class="icon">⚡</span> Scan Now
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Summary Metric Cards (Req 04) -->
+      <section class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-title">Watched Whales</span>
+            <span class="metric-badge">Req 01</span>
+          </div>
+          <div class="metric-value" id="statWhalesCount">—</div>
+          <div class="metric-meta" id="statWhalesActive">Min 5 Active Required</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-title">Total Monitored Flow</span>
+            <span class="metric-badge">Req 04</span>
+          </div>
+          <div class="metric-value accent-green" id="statTotalVolume">—</div>
+          <div class="metric-meta">Aggregated Cross-Whale Volume</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-title">USDC Volume</span>
+            <span class="metric-badge">Testnet USDC</span>
+          </div>
+          <div class="metric-value" id="statUsdcVolume">—</div>
+          <div class="metric-meta">6 Decimals Precision</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-title">Detected Whale Moves</span>
+            <span class="metric-badge">Req 03</span>
+          </div>
+          <div class="metric-value accent-cyan" id="statMovementCount">—</div>
+          <div class="metric-meta" id="statThresholdInfo">Above Threshold Rules</div>
+        </div>
+      </section>
+
+      <!-- Action & Config Controls -->
+      <div class="controls-bar">
+        <div class="view-switch">
+          <button class="tab-btn active" data-tab="summary-tab">Whale Summary Matrix</button>
+          <button class="tab-btn" data-tab="movements-tab">Live Movement Stream</button>
+        </div>
+        <div class="action-buttons">
+          <button id="btnOpenThresholds" class="btn btn-secondary">
+            <span>⚙️</span> Threshold Rules
+          </button>
+          <button id="btnOpenWatchlist" class="btn btn-accent">
+            <span>👥</span> Manage Watchlist
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab 1: Summary Matrix View (Req 04) -->
+      <section id="summary-tab" class="tab-pane active">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Cross-Watchlist Capital Flow Matrix</h2>
+              <p class="panel-desc">Real-time aggregate capital movement across all monitored whale accounts on Pharos Atlantic Testnet.</p>
+            </div>
+            <span class="tag">Autonomous Aggregator</span>
+          </div>
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Monitored Whale</th>
+                  <th>Address</th>
+                  <th>Inflow (USD)</th>
+                  <th>Outflow (USD)</th>
+                  <th>Net Flow</th>
+                  <th>Movements</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="whaleMatrixBody">
+                <tr><td colspan="7" class="loading-cell">Loading whale summary...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab 2: Live Movement Stream View (Req 03) -->
+      <section id="movements-tab" class="tab-pane">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Semantic Whale Movement Explanations</h2>
+              <p class="panel-desc">Contextually interpreted transactions detailing asset type, amount, flow direction, counterparty labels, and PharosScan explorer proof.</p>
+            </div>
+            <span class="tag tag-cyan" id="streamCounter">0 Movements Logged</span>
+          </div>
+          <div class="movement-feed" id="movementFeed">
+            <div class="empty-state">No whale movements detected above threshold yet. Click "Scan Now" or wait for the next block poll.</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Watchlist Manager Modal (Req 01) -->
+    <div class="modal" id="modalWatchlist">
+      <div class="modal-backdrop" id="closeWatchlistBackdrop"></div>
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Manage Monitored Whale Watchlist</h3>
+          <button class="btn-close" id="btnCloseWatchlist">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-tip">The agent strictly requires <strong>at least 5 actively monitored addresses</strong> (Task Requirement 01).</p>
+          <form id="formAddWhale" class="inline-form">
+            <input type="text" id="inputWhaleAddress" placeholder="0x... (EVM Address)" required>
+            <input type="text" id="inputWhaleLabel" placeholder="Label / Whale Name" required>
+            <button type="submit" class="btn btn-primary">+ Add Whale</button>
+          </form>
+          <div class="watchlist-items" id="watchlistContainer">
+            <!-- Rendered by app.js -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Threshold Rules Modal (Req 02) -->
+    <div class="modal" id="modalThresholds">
+      <div class="modal-backdrop" id="closeThresholdsBackdrop"></div>
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Configure "Significant" Thresholds</h3>
+          <button class="btn-close" id="btnCloseThresholds">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-tip">Configure minimum amount or USD equivalent value to trigger a whale alert (Task Requirement 02).</p>
+          <div class="thresholds-list" id="thresholdsContainer">
+            <!-- Rendered by app.js -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>Built for <strong>Pharos Agent Arena</strong> (MediumTrading / Monitoring)</span>
+      <span>Official MCP Server: <code>mcp.pharos.xyz/mcp</code></span>
+      <span>Explorer: <a href="https://atlantic.pharosscan.xyz" target="_blank" rel="noopener">atlantic.pharosscan.xyz</a></span>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
