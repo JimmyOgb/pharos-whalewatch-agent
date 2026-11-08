@@ -1,0 +1,31 @@
+1
+00:00:01,000 --> 00:00:06,500
+Welcome to the Pharos Whale-Watching Agent, an autonomous capital flow monitoring system for Pharos Atlantic Testnet.
+
+2
+00:00:07,000 --> 00:00:13,000
+Connected directly to the official Pharos Model Context Protocol server, the agent monitors high-volume capital flow in real time.
+
+3
+00:00:13,500 --> 00:00:20,500
+Requirement one: The agent actively tracks at least five configurable addresses, maintaining an immutable five-address security guarantee.
+
+4
+00:00:21,000 --> 00:00:27,500
+Requirement two: Significance thresholds are fully configurable per token or in USD value terms for Atlantic USDC and PHAROS.
+
+5
+00:00:28,000 --> 00:00:35,500
+Triggering an on-demand scan of recent Atlantic blocks demonstrates immediate live log ingestion across testnet contracts.
+
+6
+00:00:36,000 --> 00:00:43,000
+Requirement three: Each report contextually explains the movement—what moved, how much, flow direction, and verified PharosScan links.
+
+7
+00:00:43,500 --> 00:00:50,500
+Requirement four: The Cross-Watchlist Capital Flow Matrix synthesizes aggregated volume, net inflow, and individual whale breakdown.
+
+8
+00:00:51,000 --> 00:00:57,000
+Fully verified, tested, and deployed to production at pharos-whalewatch-agent.vercel.app.
