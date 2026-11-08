@@ -7,3 +7,5 @@ data/
 demo/*.mp4
 demo/*.webm
 *.log
+
+.vercel

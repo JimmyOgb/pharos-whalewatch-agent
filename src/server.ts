@@ -7,6 +7,7 @@ import { rpcService } from './services/rpc.js';
 import { mcpClient } from './services/mcpClient.js';
 import { whaleEvaluator } from './services/evaluator.js';
 import { SystemTelemetry } from './types.js';
+import { DASHBOARD_HTML, DASHBOARD_CSS, DASHBOARD_JS } from './views.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,9 +19,29 @@ const startTime = Date.now();
 app.use(cors());
 app.use(express.json());
 
-// Serve static frontend assets
-const publicPath = path.resolve(__dirname, '../public');
-app.use(express.static(publicPath));
+// Explicit Static and Dashboard Routes (100% serverless immune)
+app.get('/', (_req: Request, res: Response) => {
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.send(DASHBOARD_HTML);
+});
+
+app.get('/style.css', (_req: Request, res: Response) => {
+  res.setHeader('Content-Type', 'text/css; charset=utf-8');
+  res.send(DASHBOARD_CSS);
+});
+
+app.get('/app.js', (_req: Request, res: Response) => {
+  res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+  res.send(DASHBOARD_JS);
+});
+
+// Serve static frontend assets fallback
+try {
+  const publicPath = path.resolve(__dirname, '../public');
+  app.use(express.static(publicPath));
+} catch {
+  // Ignore in serverless
+}
 
 // Health check
 app.get('/api/health', (req: Request, res: Response) => {
@@ -204,8 +225,9 @@ app.get('/api/telemetry', async (req: Request, res: Response) => {
 });
 
 // Fallback to SPA index.html
-app.get('*', (req: Request, res: Response) => {
-  res.sendFile(path.join(publicPath, 'index.html'));
+app.get('*', (_req: Request, res: Response) => {
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.send(DASHBOARD_HTML);
 });
 
 if (process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
